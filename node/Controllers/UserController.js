@@ -74,5 +74,5 @@ module.exports = {
     deleteUser,
     getAllUsers,
     updateUser,
-    getUser,
+    getUser
 };
