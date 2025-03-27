@@ -1,18 +1,40 @@
 const express = require("express")
-const app = express()
+const cors = require("cors")
+const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const dotenv = require("dotenv")
 dotenv.config()
-const router = require("./Routers/router")
-const mongoose = require("mongoose")
+const app = express()
 
-app.use(bodyParser.json())
+app.use(cors()); // מאפשר גישה מה-Client
+app.use(bodyParser.json());
 
-mongoose.connect(process.env.DB)
-    .then(() => console.log("Connected to mongoDB")).catch(err => console.log(err))
+//התחברות לmongoDB
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("MongoDB connection error:", err));
 
-app.use("./router", router)
+//יבוא ראוטים
+const eventRouter = require("./Routers/EventRouter")
+const memorialRouter = require("./Routers/MemorialRouter")
+const userRouter = require("./Routers/UserRouter")
+const prayerTimeRouter = require("./Routers/PrayerTimeRouter")
+const settingRouter = require("./Routers/SettingRouter")
 
+//שימוש בנתיבים
+app.use("/events", eventRouter);
+app.use("/memorials", memorialRouter);
+app.use("/users", userRouter);
+app.use("/prayer-times", prayerTimeRouter);
+app.use("/settings", settingRouter);
+
+//טיפול בשגיאות גלובליות
+app.use((err, req, res, next) => {
+    console.error("Error:", err.message);
+    res.status(err.status || 500).json({ error: err.message || "Internal Server Error" });
+});
+
+//הפעלת השרת
 app.listen(process.env.PORT, () => {
     console.log("running!!")
 })
