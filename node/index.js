@@ -19,13 +19,13 @@ const eventRouter = require("./Routers/EventRouter")
 const memorialRouter = require("./Routers/MemorialRouter")
 const userRouter = require("./Routers/UserRouter")
 const prayerTimeRouter = require("./Routers/PrayerTimeRouter")
-const settingRouter = require("./Routers/SettingRouter")
+const settingRouter = require("./Routers/SettingRouer")
 
 //שימוש בנתיבים
 app.use("/events", eventRouter);
 app.use("/memorials", memorialRouter);
-app.use("/users", userRouter);
 app.use("/prayer-times", prayerTimeRouter);
+app.use("/users", userRouter);
 app.use("/settings", settingRouter);
 
 //טיפול בשגיאות גלובליות
