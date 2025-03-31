@@ -69,16 +69,22 @@ async function getSetting(req, res) {
         res.status(500).send({ error: error.message });
     }
 }
+
 async function resetSettings(req, res) {
     try {
-        const defaultSettings = [
-            { name: "theme", value: "light" },
-            { name: "notifications", value: "enabled" },
-            { name: "language", value: "en" }
-        ];
+        const defaultSettings = {
+            themeColor: "light",
+            layout: "grid",
+            displayOptions: {
+                showTime: true,
+                showDate: true,
+                showEvents: true
+            }
+        };
 
         await Setting.deleteMany({});
-        const resetSettings = await Setting.insertMany(defaultSettings);
+
+        const resetSettings = await Setting.create(defaultSettings);
 
         res.status(200).send({ message: "Settings reset to default successfully", settings: resetSettings });
     } catch (error) {
@@ -86,3 +92,12 @@ async function resetSettings(req, res) {
         res.status(500).send({ error: error.message });
     }
 }
+
+module.exports = {
+    addSetting,
+    deleteSetting,
+    getAllSettings,
+    updateSetting,
+    getSetting,
+    resetSettings
+};

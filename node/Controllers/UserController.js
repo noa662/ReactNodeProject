@@ -1,4 +1,4 @@
-const User = require('../Models/User');
+const User = require('../Models/UserModel');
 
 async function addUser(req, res) {
     try {
@@ -31,8 +31,7 @@ async function deleteUser(req, res) {
 
 async function getAllUsers(req, res) {
     try {
-        const users = await User.find()
-            .select({ name: 1, email: 1, password: 0 });
+        const users = await User.find().select("-password");
         res.status(200).send(users);
     } catch (error) {
         res.status(500).send({ error: error.message });

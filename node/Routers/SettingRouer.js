@@ -1,5 +1,5 @@
 const express = require("express");
-const { addSetting, deleteSetting, getAllSettings, updateSetting, getSetting } = require("../Controllers/SettingController");
+const { addSetting, deleteSetting, getAllSettings, updateSetting, getSetting , resetSettings} = require("../Controllers/SettingController");
 
 const router = express.Router();
 
@@ -8,5 +8,6 @@ router.get("/:id", getSetting);  // שליפת הגדרה ספציפית לפי 
 router.post("/", addSetting);  // יצירת הגדרה חדשה
 router.put("/:id", updateSetting);  // עדכון הגדרה
 router.delete("/:id", deleteSetting);  // מחיקת הגדרה
+router.post("/reset", resetSettings);  // איפוס ההגדרות
 
 module.exports = router;

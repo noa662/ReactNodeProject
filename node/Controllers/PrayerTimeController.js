@@ -1,10 +1,9 @@
-const PrayerTime = require('../Models/PrayerTime');
+const PrayerTime = require('../Models/PrayerTimeModel');
 const { calculateHalachicTimes } = require('../Utils/HalachicTimesCalculator');
 
 async function getAllPrayerTimes(req, res) {
     try {
-        const prayerTimes = await PrayerTime.find()
-            .select({ name: 1, email: 1, password: 0 });
+        const prayerTimes = await PrayerTime.find();
         res.status(200).send(prayerTimes);
     } catch (error) {
         res.status(500).send({ error: error.message });

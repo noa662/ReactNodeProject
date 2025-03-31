@@ -1,4 +1,4 @@
-const Memorial = require('../Models/Memorial');
+const Memorial = require('../Models/MemorialModel');
 
 async function addMemorial(req, res) {
     try {
